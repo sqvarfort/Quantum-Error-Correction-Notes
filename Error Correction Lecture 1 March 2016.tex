@@ -1,0 +1,263 @@
+\input{../../UCLHeader.tex}
+\input{../../UCLCommands.tex}
+\begin{document}
+\title{Error Correction Lecture 3}
+\author{with Dan Browne}
+\maketitle
+\tableofcontents
+\section{Correction of a General Error}
+
+We can write the density matrix for a general error in terms of Kraus operators
+, 
+\beq
+\rho \rightarrow \sum_j E_j \rho E_j^\dagger = \Sigma(\rho)
+\eeq
+The limitation of this approach is we cannot write down every possible error. For example, an environment that just replaces $\rho$ by any random state cannot be written down in this formalism. 
+
+Here, we will assume that $\rho$ is pure, so that $\rho = \ket{\psi}\bra{\psi} $. This is a fair assumption, because the codewords should be pure states. Mixed states cannot be perfectly distinguished. thus, the channel has the following effect:
+\beq
+\Sigma \left( \ket{\psi}\bra{\psi}\right) = \sum_j E_j \ket{\psi}\bra{\psi} E_j^\dagger
+\eeq
+Therefore, we can understand the entire behaviour by studying $E_j \ket{\psi}$ only. If we can correct this, we are good. 
+
+Let's now assume that the system is a qubit. This is not necessary, but it will simplify our analysis. We then know that $I,X,Y,Z$  is a basis for linear operators that act on qubits. So we can write
+\beq
+E_j\ket{\psi} = \left( a I + b X + cY + dZ \right) \ket{\psi}
+\eeq
+This could perhaps be though of as a `superposition' of operators. We create a superposition of faulty states that contain Pauli errors. We assume that  we have a code that can correct for $X$ and $Z$ errors. We also assume tat $X,Y,Z$ all lead to distinct syndromes. 
+
+
+
+All errors are orthogonal, since they are also our basis operators. We can detect them and distinguish between them. However, a distinguishable syndrome leads to distinguishable states. Then, in a sense, we `collapse' to a single $X$, $Y$ or $Z$ error. 
+
+For a formal treatment of this situation, see Nielsen and Chuang. This is also called error quantisation, or error discretisation. 
+
+\section{The Knill-Laflamme condition}
+
+Here, we will introduce a general view of quantum error correction. Here, we imagine a circuit with an error $\calE$ and an operator $R$ that allows for both measurement and detection. Let us start with a state $\ket{\psi}$ that is a codeword in the codespace. The error is a general Kraus operator error, 
+\beq
+\calE (\rho) = \sum_j E_j \rho E_j^\dagger
+\eeq
+The final state of the circuit should ideally be some $\alpha \ket{\psi}$ where $\alpha$ is some proportionality constant. 
+
+Then, given a code, which we call $C$, and an error channel $\calE$, we can ask the following question: When does recovery exist? 
+
+Recovery can be thought of as a projector onto the code space. We can assume that we are encoding the logical bits, $\ket{00\ldots 0}$, $\ket{00\ldots 1}$ and so on all up to and including $\ket{11\ldots 1}$. We can choose to represent these bit strings as integers:
+\beq
+\ket{0}_L, \ket{1}_L , \ldots \ket{k-1}_L
+\eeq
+Then we can create a projector that projects onto the codespace:
+\beq
+P = \sum^{2k - 1}_{x = 0} \ket{x}\bra{x}
+\eeq
+This is a projector onto the space of all codewords. 
+
+Question: Why does the projector have $2k$ element? This could be a copying mistake. 
+
+Then, given a code $C$ with code space projector $P$ and error $\calE$, a recovery  $R$ exists if and only if
+\beq
+P E_j ^\dagger E_k P = \alpha_{jk} P
+\eeq
+So an error model can be corrected if this expression is proportional to $P$, where $\alpha_{jk}$ are the elements of some Hermitian matrix. We can rewrite the above to find
+\beq
+\sum_x \ket{x}\bra{x} E_j^\dagger E_k \sum_y \ket{y}\bra{y} = \alpha_{jk} \sum_z \ket{z}\bra{z}
+\eeq
+Here, $x,y,z$ are orthogonal codewords. Now, consider two additional codewords, $\ket{p}$ and $\ket{q}$. We apply these on each side of the expression above and find
+\beq
+\bra{p}E_j^\dagger E_k \ket{q} = \alpha_{jk} \delta_{pq}
+\eeq
+Let us look at the two different situations. 
+
+If $q \neq p$, then $\delta_{pq} = 0$ and so 
+\beq
+\bra{p} E_j^\dagger E_k \ket{q} = 0
+\eeq
+What we are saying then is that the states $E_k \ket{q}$ and $E_j \ket{p}$ are orthogonal. This is telling us that no error can make us mix up the codewords because we could always distinguish between them .
+
+Question: However, the error could still change one codeword into another. So we are simply saying that this error channel cannot create codewords that are mixed, or superpositions of other codewords. 
+
+The next situation is $p = q$ where $\delta_{pq} = 1$. So then 
+\beq
+\bra{p} E_j^\dagger E_k \ket{q} = \alpha_{jk}
+\eeq
+What we conclude here is that the inner product of $E_k \ket{q}$ and $E_j \ket{p}$ is independent of the state $\ket{p}$. However, note also that $\alpha_{jk}$ could be zero. 
+
+Essentially, we want to prevent the environment from learning about the codeword. Let us look at an example. 
+
+\subsection{Example: The Repetition Code}
+Recall that it cannot correct $Z$ errors. However, we can also have a value of a qubit by measuring just one single qubit. 
+Imagine that the environment measures one of our qubits by implementing a CNOT gate. 
+
+If we trace out the environment, we find that we have the operators
+\beq
+E_0 = \frac{I}{\sqrt{2}}
+\eeq
+\beq
+E_1 = \frac{Z}{\sqrt{2}}
+\eeq
+We will show that this fails the condition that we said out before. Let $E$ act on the 1st qubit. We obtain
+\beq
+\bra{000} ( ZII)(III)\ket{000} = 1
+\eeq
+\beq
+\bra{111} (ZII)(III) \ket{111} = -1
+\eeq
+Note that the two outcomes are different. Thus this code fails the Knill-Laflamme condition. Look at section 10.3 in Nielsen and Chuang for more information. 
+
+\section{The Steane Code}
+This code has $(n = 7, k= 1, d = 3)$. It has logical states
+\beq
+\ket{0}_L = \ket{0000000} + \ket{1010101} + \ket{0110011} + \ket{1100110} + \ket{000111} + \ket{1011010} + \ket{0111100} + \ket{1101001}
+\eeq
+There is a large difference in the Hamming weight compared to what we had before. Here, the Hamming weight is 4. This code is actually using superpositions of codewords for a classical Hamming code. We obtain the other codeword by 
+\beq
+\ket{1}_L = XXXXXXX \ket{0}_L
+\eeq
+To detect phase flips, we can perform the following measurements:
+\begin{tabular}{c}
+$IIIXXXX$ \\
+$IXXIIXX$ \\
+$XIXIXIX$
+\end{tabular}
+
+In order to detect phase flips, we can apply the measurement
+\begin{tabular}{c}
+$IIIZZZZ$ \\
+$IZZIIZZ$ \\
+$ZIZIZIZ$
+\end{tabular}
+Note the symmetry of the detection methods. Furthermore,  the logical operators are given by
+\beq
+\bar{X} = X^{\otimes 7}
+\eeq
+\beq
+\bar{Z}= Z^{\otimes 7}
+\eeq
+Note that every time we write down logical operators, they must retain the original commutation and anti-commutation properties as the original operators. This is the case here as we have an odd number of operators. 
+
+\section{Example of a CSS Code}
+CSS stands for Calderbank-Shor-Steane. A CSS code is a special type of stabiliser code (more on this later) which is fundamentally constructed based on classical codes. 
+
+Error detection operators are design to only detect one signle type of error. The Steane code is non-degenerate. This means that all detectable errors have a unique syndrome. The Steane code is also smaller than the Shor code that we looked at before, which is another advantage. 
+
+In classical code, we have the \textbf{Hamming bound}, which denotes a bound on the size of the code. 
+
+The Hamming bound is a limit on the parameters of an arbitrary block code. 
+
+\section{Quantum Hamming Bound}
+For a non-degenerate code, every error has a unique syndrome. This can be used as a proof of a classical Hamming bound. 
+
+For a degenerate code, the above is not true. Recall that a non-degenerate code, for example the Steane code, can correct the following number of errors
+\beq
+t = \frac{d-1}{2}
+\eeq
+where $d$ is the Hamming distance. Then, we can show that a degenerate code has the following bound
+\beq
+\sum^t_{j = 0} \bpmat n \\ j \epmat 3^j 2^k \leq 2^n
+\eeq
+Every error here leads to a distinct syndrome. 
+
+Let us here outline the idea instead of looking at the actual proof. The proof can be found in Section 10.3.4 in Nielsen and Chuang. 
+
+First, note that we have a number of $2^k$ codewords. We can cound the maximum number of orthogonal states to see this. 
+
+The first thing we then do is count the number of different errors. We can have up to $t$ errors of the form $X,Y,Z$ on $t$ different qubits. Then, define $j \leq t$, where $j$ is the number of errors that occurred for this specific case. 
+
+Let us count how many error combinations there are. For a number of $n$ physical qubits and $j$ errors, we have a number of 
+\beq
+\bpmat n \\j \epmat
+\eeq
+errors. On every location location we have a $X,Y,Z$ error. Then, we have 
+\beq
+3^j \bpmat n \\j \epmat
+\eeq
+distinctive errors. Thus in total, if we consider all values of $j$, we have 
+\beq
+\sum^t_{j = 0} 3^j \bpmat n \\j \epmat
+\eeq
+And given $2^k$ codewords, we need at least 
+\beq
+\sum^t_{j = 0} 3^j \bpmat n \\j\epmat 2^k
+\eeq
+orthogonal codewords. These codewords need to be distinguishable, due to the Knill-Laflamme condition. 
+
+However, we have $2^n$ orthogonal states in the code space, and hence we obtain the inequality. Note that this only applies to non-degenerate codes, whereas for degenerate codes it is still an open question. 
+
+So, if we have $k = 1$ and $t = 1$, we find
+\beq
+2(1 + 3n) = 2^n
+\eeq
+Thus, we find
+\beq
+n >4
+\eeq
+which means that a 5-qubit code is the smallest code that we can have. 
+
+Question: I'm not entirely sure what this condition tells us. 
+
+\section{Ingredients for the Stabiliser Formalism}
+Before we look closer at the stabiliser formalism, let us outline what we need. There are two main components that we will make use of: Pauli operators and Group Theory. 
+
+Recall that a group is an abstraction of symmetry operations. One example of this is a square. Symmetry transformations that leave the square invariant are rotations of 90, 180, 270 and 360 degrees, and reflections. What features are there that we need to take into account? 
+
+We can compose two symmetry operations to et another symmetry. For example, the identity is an example of this. 
+
+Recall that symmetries are invertible. In an abelian group, the group elements all commute. 
+
+We also have that operations are associative. That is, 
+\beq
+A(BC) = (AB) C
+\eeq
+
+We can write these conditions succinctly as follows: A group  $G$ is a set of elements $\{g_i\}$ with a binary operation defined, $g_k \circ g_l$ for all elements that satisfies the following requirements. 
+\begin{itemize}
+\item[1] Closure. For every element in the group, their combination using the binary group combination rule is
+\beq
+g_k \circ g_l \in G
+\eeq
+
+\item[2] An identity element $e$, such that 
+\beq
+e \circ g_j = g_j
+\eeq
+
+\item[3] An inverse, such that 
+\beq
+g_j (g_j)^{-1} = e
+\eeq
+
+\item[4] Composition rule is associative. 
+\end{itemize}
+
+For us, the last three properties are automatically satisfied by using matrices as group elements. The only thing we need to really concern ourselves with is the requirement of closure. 
+
+Recall also that a subgroup is a subset of group elements that is itself a group. For example, it must include an identity. 
+
+Another important concept is that of \textbf{group generators}. These can be thought of as a sort-of group-theoretical basis. 
+
+generators are a subset of elements of the group $G$ such that every element of $G$ can be expressed as a product of generators. For the square, this would be the 90 rotation element -- from this we could generate all other rotations. However, we also need one more generator, a reflection. If we combine these, we can generate the full group. We sometimes write the group in terms of its generators:
+\beq
+G = \braket{a_1, a_2 \ldots a_n}
+\eeq
+Note that the set of generators is not unique. There can be many sets of generators that can create the full group. 
+
+The group that we shall study is the Pauli group, or more closely, the $N$-qubit Pauli group. We write
+\beq
+P_N = \braket{i, X_j, Z_j }
+\eeq
+for all $j = 1\ldots n$. 
+
+For the $n = 1$ case, we have already seen that 
+\beq
+Y = i XZ
+\eeq
+So in order to create $Y$, we do indeed need to include $i$ as our generators. Therefore, we get the following group elements:
+\begin{tabular}{cc}
+$\pm I $ & $\pm i I$ \\
+$\pm X$ & $\pm i X$ \\
+$\pm Y$ & $\pm iY$ \\
+$\pm Z$ & $\pm i Z$
+\end{tabular}
+The $N$-qubit group consists of all $N$-fold tensor products of $X,Y,Z,i$ with prefactors. Note that $N =1$ has 16 elements. In general, we get $4^{N+1}$ elements for the $N$-qubit group. 
+
+\end{document}

@@ -1,0 +1,40 @@
+\input{../../UCLHeader.tex}
+\input{../../UCLCommands.tex}
+\begin{document}
+\title{Quantum Error Correction - Lecture 7}
+\author{with Dan Browne}
+\maketitle
+\tableofcontents
+
+\section{Topological Codes}
+In this section, we shall introduce the notion of a topological code. This is the most viable candidate because, as we shall see, it has a pretty good threshold value. 
+
+Previously, we have seen that increasing the robustness is basically equivalent to increasing the distance of the code. Let us look closer at this notion. Start with the $n$-qubit repetition code
+\beq
+\ket{0}_L = \ket{0}^{\otimes n}
+\eeq
+\beq
+\ket{1}_L = \ket{1}^{\otimes n}
+\eeq
+For a number $m = n-1$ generators, we have
+\beq
+Z_1 Z_2, Z_2 Z_3 \ldots Z_{n-1} Z_n
+\eeq
+The product of all generators gives
+\beq
+Z_1 \otimes I \ldots \otimes I \otimes Z_n
+\eeq
+This is no an independent generator. We can work with a graphical representation of a qubit. Let us imagine it as a one-dimensional grid where the qubits are represented by edges. 
+
+\section{Products of Stabiliser Generators}
+We say that the three generators $A, B, C$ are not independent if
+\beq
+AB = C
+\eeq
+Alternatively, an equivalent definition states that $\{A_1, A_2 \ldots A_n\}$ are independent if and only if there is no product of $A_j$'s that generates the identity. 
+
+\section{The Toric Code}
+See handout. 
+
+
+\end{document}
