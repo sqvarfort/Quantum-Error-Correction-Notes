@@ -1,0 +1,106 @@
+%New commands
+%Maths
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bea}{\begin{align}}
+\newcommand{\eea}{\end{align}}
+\newcommand{\p}{\partial}
+\newcommand{\trace}[1]{\mathrm{Tr}\left[#1 \right]}
+\newcommand{\ptrace}[2]{\mathrm{Tr}_{#1} \left[ #2 \right]}
+\newcommand{\bpmat}{\begin{pmatrix}}
+\newcommand{\epmat}{\end{pmatrix}}
+\newcommand{\vv}[1]{\vec{#1}}
+\newcommand{\mat}[1]{\uuline{#1}}
+\newcommand{\norm}[1]{\| #1 \|}
+\newcommand{\op}[1]{\mathbb{#1}}
+\newcommand{\vhat}[1]{\hat{\vv{#1}}}
+
+%Renewed commands, in order for them to take arguments with automatically adjusted brackets 
+\renewcommand{\dim}[1]{\mathrm{dim}\left( #1\right)}
+\renewcommand{\det}[1]{\mathrm{det} \left( #1 \right)}
+\renewcommand{\exp}[1] {\mathrm{exp} \left[ #1 \right]}
+
+
+%\mathbb Letters
+\newcommand{\identity}{\mathbb{I}}
+\newcommand{\inreal}{\mathbb{R}}
+\newcommand{\incomplex}{\mathbb{C}}
+
+%Redefine Braket
+\renewcommand{\braket}[1]{\left\langle #1 \right\rangle}
+
+%Integration
+\newcommand{\intd} {\mathrm{d}}
+
+%Operators
+\newcommand{\phihat}{\hat{\phi}}
+\newcommand{\xhat}{\hat{x}}
+\newcommand{\phat}{\hat{p}}
+\newcommand{\Dhat}{\hat{D}}
+\newcommand{\Hhat}{\hat{H}}
+\newcommand{\ahat}{\hat{a}}
+\newcommand{\bhat}{\hat{b}}
+\newcommand{\chat}{\hat{c}}
+\newcommand{\Phihat}{\hat{\Phi}}
+
+%Channels
+\newcommand{\channel}[3]{\mathcal{#1}^{#2 \rightarrow #3}}
+
+
+%Caligraphy letters
+\newcommand{\cl}[1]{\mathcal{#1}}
+\newcommand{\Hilbert}{\mathcal{H}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\Lag}{\mathcal{L}}
+\newcommand{\calD}{\mathcal{D}}
+
+
+%Pauli
+\newcommand{\Xhat}{\hat{X}}
+\newcommand{\Yhat}{\hat{Y}}
+\newcommand{\Zhat}{\hat{Z}}
+\newcommand{\PauliX}{\bpmat 0 & 1 \\ 1 & 0 \epmat}
+\newcommand{\PauliZ} {\bpmat 1 & 0 \\ 0 & -1\epmat}
+
+
+
+%Gell-Mann matrices
+\newcommand{\GMone} {\bpmat 0 & 1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 0 \epmat }
+\newcommand{\GMsix}{\bpmat 0 & 0 & 0 \\ 0 & 0 & 1\\ 0 & 1 & 0\epmat}
+
+%Density matrices
+\newcommand{\rhotwo}{\bpmat 1 & e^{-it} \\ e^{it} & 1 \epmat}
+\newcommand{\rhothree} {\bpmat 1 & e^{it} & e^{2it} \\
+e^{-it} & 1 & e^{it} \\
+e^{-2it} & e^{-it} & 1 \epmat}
+
+
+
+%Misc
+\def\dbar{{\mathchar'26\mkern-12mu d}} %a $d$ with a bar through its stem
+
+
+\newcommand{\eq}[1]{$#1$}
+
+%Undertilded quantities
+\newcommand{\tildeq}{\underset{^\sim}q}
+\newcommand{\tildep}{\underset{^\sim}p}
+
+%Curly letters
+\newcommand{\calE}{\mathcal{E}}
+
+\newcommand{\Nhat}{\hat{N}}
+
+%Wave vector shortening
+\newcommand{\kvec}{\vv{k}}
+
+
+
+
+
+
+
+
+
+
+
